@@ -214,5 +214,49 @@ def player_numbers(team)
 end
 
 def player_stats(player)
+  game_hash.each{|key1, value|
+  	value.each{|key2, value2|
+  		if key2 == :players
+  			value2.each{|key3, value3|
+    			if key3 == player
+    			  return value3
+    			end
+  			}
+  		end
+  	}
+  }
+end
 
+def big_shoe_rebounds
+  shoe_size = Array.new
+
+  game_hash.each{|key1, value|
+  	value.each{|key2, value2|
+  		if key2 == :players
+  			value2.each{|key3, value3|
+          value3.each{|key4, value4|
+            if key4 == :shoe
+              shoe_size.push(value4)
+            end
+          }
+  			}
+  		end
+  	}
+  }
+
+  shoe_size.sort!
+
+  maximum = shoe_size[shoe_size.length-1]
+
+  game_hash.each{|key1, value|
+  	value.each{|key2, value2|
+  		if key2 == :players
+  			value2.each{|key3, value3|
+          if value3[:shoe] == maximum
+            return value3[:rebounds]
+          end
+  			}
+  		end
+  	}
+  }
 end
