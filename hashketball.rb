@@ -1,8 +1,9 @@
+# I would never call hashes like this for the record, but this lab wants me to iterate. . .
 def game_hash
   game = {
     home: {
       team_name: "Brooklyn Nets",
-      colors: ["Black", " White"],
+      colors: ["White", "Black"],
       players: {
         "Alan Anderson" => {
           number: 0,
@@ -63,7 +64,7 @@ def game_hash
 
     away: {
       team_name: "Charlotte Hornets",
-      colors: ["Torquise", " Purple"],
+      colors: ["Turquoise", "Purple"],
       players:{
         "Jeff Adrien" => {
           number: 4,
@@ -76,7 +77,7 @@ def game_hash
           slam_dunks: 2
         },
 
-        "Bismak Biyomobo" => {
+        "Bismak Biyombo" => {
           number: 0,
           shoe: 16,
           points: 12,
@@ -87,7 +88,7 @@ def game_hash
           slam_dunks: 10
         },
 
-        "DeSagno Diop" => {
+        "DeSagna Diop" => {
           number: 2,
           shoe: 14,
           points: 24,
@@ -131,11 +132,83 @@ def num_points_scored(player_name)
   	value.each{|key2, value2|
   		if key2 == :players
   			value2.each{|key3, value3|
-  				if key3 = player_name
+  				if key3 == player_name
   					return value3[:points]
   				end
   			}
   		end
   	}
   }
+end
+
+def shoe_size(player_name)
+    hash = game_hash
+
+  hash.each{|key1, value|
+  	value.each{|key2, value2|
+  		if key2 == :players
+  			value2.each{|key3, value3|
+          if key3 == player_name
+  					return value3[:shoe]
+  				end
+  			}
+  		end
+  	}
+  }
+end
+
+def team_colors(team_name)
+  hash = game_hash
+
+  if hash[:home][:team_name] == team_name
+    hash[:home].each{|key, value|
+      if key == :colors
+        return value
+      end
+    }
+  else
+    hash[:away].each{|key, value|
+      if key == :colors
+        return value
+      end
+    }
+  end
+end
+
+def team_names
+  array = Array.new
+
+  game_hash.each{|key, value|
+    value.each{|key2, value2|
+      if key2 == :team_name
+        array.push(value2)
+      end
+    }
+  }
+
+  array
+end
+
+def player_numbers(team)
+  numbers = Array.new
+
+  if game_hash[:home][:team_name] == team
+    game_hash[:home][:players].each{|key, value|
+      value.each{|key2, value2|
+        if key2 == :number
+          numbers.push(value2)
+        end
+      }
+    }
+  else
+    game_hash[:away][:players].each{|key, value|
+      value.each{|key2, value2|
+        if key2 == :number
+          numbers.push(value2)
+        end
+      }
+    }
+  end
+
+  numbers
 end
